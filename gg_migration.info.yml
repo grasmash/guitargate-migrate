@@ -1,0 +1,13 @@
+name: GG Migration
+description: Custom migration module for migrating data from a Drupal 7 site.
+package: Guitar Gate
+type: module
+core: 8.x
+dependencies:
+  - drupal:migrate_plus
+  - drupal:migrate_tools
+  - drupal:migrate_drupal
+
+
+# @todo on install:
+# create menu item(s): courses

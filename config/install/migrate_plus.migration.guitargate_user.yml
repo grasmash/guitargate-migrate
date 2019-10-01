@@ -1,0 +1,57 @@
+id: guitargate_user
+migration_group: gg
+migration_tags: {}
+label: 'Guitargate User'
+
+source:
+  plugin: guitargate_user
+
+destination:
+  plugin: 'entity:user'
+
+process:
+  name:
+    plugin: dedupe_entity
+    source: name
+    entity_type: user
+    field: name
+    postfix: _
+  pass: pass
+  mail:
+    plugin: dedupe_entity
+    source: mail
+    entity_type: user
+    field: mail
+    postfix: _
+  init: init
+  status: status
+  created: created
+  access: access
+  login: login
+  timezone: timezone_name
+  roles:
+    plugin: default_value
+    default_value: 1
+  field_full_name: field_full_name_value
+  field_user_location: field_user_location_value
+  field_guitar: field_guitar_value
+  field_twitter_handle: field_twitter_handle_value
+  field_music_liked: field_music_liked_value
+  field_biography: field_biography_value
+  # field_email_subscription: field_email_subscription
+  field_user_level: field_user_level_value
+  user_picture:
+    -
+      plugin: default_value
+      source: picture
+      default_value: null
+    -
+      plugin: migration
+      migration: guitargate_file
+
+migration_dependencies: {}
+
+dependencies:
+  enforced:
+    module:
+      - gg_migration

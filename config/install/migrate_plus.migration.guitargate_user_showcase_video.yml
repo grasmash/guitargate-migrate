@@ -1,0 +1,41 @@
+id: guitargate_user_showcase_video
+migration_group: gg
+migration_tags: {}
+label: 'Guitargate User Showcase Video'
+
+source:
+  plugin: guitargate_user_showcase_video
+
+destination:
+  plugin: 'entity:node'
+
+process:
+  type:
+    plugin: default_value
+    default_value: video
+  title: title
+  uid:
+    -
+      plugin: migration
+      migration: guitargate_user
+      source: uid
+      no_stub: true
+    -
+      plugin: default_value
+      default_value: 1
+  sticky:
+    plugin: default_value
+    default_value: 0
+  status: status
+  created: created
+  changed: changed
+  field_video: field_user_video_input
+
+migration_dependencies:
+  required:
+    - guitargate_user
+
+dependencies:
+  enforced:
+    module:
+      - gg_migration

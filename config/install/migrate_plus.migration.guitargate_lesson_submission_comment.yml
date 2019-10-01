@@ -1,0 +1,53 @@
+id: guitargate_lesson_submission_comment
+label: Comments on lesson submissions
+migration_group: gg
+
+source:
+  plugin: guitargate_lesson_submission_comment
+
+destination:
+  plugin: entity:comment
+
+process:
+  pid:
+    plugin: migration
+    migration: guitargate_lesson_submission_comment
+    source: pid
+  entity_id:
+    plugin: migration
+    migration: guitargate_lesson_submission
+    source: nid
+  entity_type:
+    plugin: default_value
+    default_value: node
+  field_name:
+    plugin: default_value
+    default_value: field_video_comments
+  comment_type:
+    plugin: default_value
+    default_value: video_comment
+  subject: subject
+  uid:
+    plugin: migration
+    migration: guitargate_user
+    source: uid
+  name: name
+  mail: mail
+  status:
+    plugin: default_value
+    default_value: 1
+  'comment_body/value': comment_body_value
+  'comment_body/format':
+    plugin: default_value
+    default_value: plain_text
+    source: comment_body_format
+
+migration_dependencies:
+  required:
+    - guitargate_lesson_submission
+    - guitargate_user
+
+dependencies:
+  enforced:
+    module:
+      - gg_migration

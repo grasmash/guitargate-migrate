@@ -1,0 +1,48 @@
+id: guitargate_lesson
+migration_group: gg
+migration_tags: {}
+label: 'Guitargate Lesson'
+
+source:
+  plugin: guitargate_lesson
+
+destination:
+  plugin: 'entity:node'
+
+process:
+  type:
+    plugin: default_value
+    default_value: lesson
+  title: title
+  uid:
+    -
+      plugin: default_value
+      default_value: 1
+  sticky:
+    plugin: default_value
+    default_value: 0
+  status: status
+  'body/value': body_value
+  'body/format':
+    plugin: default_value
+    default_value: rich_text
+  created: created
+  changed: changed
+  field_course:
+    plugin: default_value
+    default_value: 1
+  field_image:
+    plugin: migration
+    migration: guitargate_file
+    source: images
+  field_attachment:
+    plugin: migration
+    migration: guitargate_file
+    source: pdfs
+  field_lesson_number: field_lesson_number_value
+  field_lesson_level: field_lesson_level_value
+
+dependencies:
+  enforced:
+    module:
+      - gg_migration

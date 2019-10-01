@@ -1,0 +1,61 @@
+# See d7_file.yml for example.
+id: guitargate_file
+migration_group: gg
+migration_tags: {}
+label: 'Guitargate File'
+
+source:
+  plugin: guitargate_file
+  constants:
+    # source_base_path must be set by the tool configuring this migration. It
+    # represents the fully qualified path relative to which uris in the files
+    # table are specified, and must end with a /. See source_full_path
+    # configuration in this migration's process pipeline as an example.
+    source_base_path: /Users/matthew.grasmick/Sites/personal/guitargate/repo/
+  scheme: public
+
+destination:
+  plugin: 'entity:file'
+
+process:
+  fid: fid
+  filename: filename
+  source_full_path:
+    -
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/source_base_path
+        - filepath
+    -
+      plugin: urlencode
+  uri:
+    plugin: file_copy
+    source:
+      - '@source_full_path'
+      - uri
+  filemime: filemime
+  # filesize is dynamically computed when file entities are saved, so there is
+  # no point in migrating it.
+  # filesize: filesize
+  status: status
+  # Drupal 7 didn't keep track of the file's creation or update time -- all it
+  # had was the vague "timestamp" column. So we'll use it for both.
+  created: timestamp
+  changed: timestamp
+  uid:
+    -
+      plugin: migration
+      migration: guitargate_user
+      source: uid
+      no_stub: true
+    -
+      plugin: default_value
+      default_value: 1
+
+migration_dependencies: {}
+
+dependencies:
+  enforced:
+    module:
+      - gg_migration

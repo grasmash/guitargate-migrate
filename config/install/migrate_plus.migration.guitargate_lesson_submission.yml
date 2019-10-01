@@ -1,0 +1,46 @@
+id: guitargate_lesson_submission
+migration_group: gg
+migration_tags: {}
+label: 'Guitargate Lesson Submission'
+
+source:
+  plugin: guitargate_lesson_submission
+
+destination:
+  plugin: 'entity:node'
+
+process:
+  type:
+    plugin: default_value
+    default_value: video
+  title: title
+  uid:
+    -
+      plugin: migration
+      migration: guitargate_user
+      source: uid
+      no_stub: true
+    -
+      plugin: default_value
+      default_value: 1
+  sticky:
+    plugin: default_value
+    default_value: 0
+  status: status
+  created: created
+  changed: changed
+  field_lesson:
+    plugin: migration
+    migration: guitargate_lesson
+    source: field_submission_related_lesson_nid
+  field_video: field_user_video_input
+
+migration_dependencies:
+  required:
+    - guitargate_lesson
+    - guitargate_user
+
+dependencies:
+  enforced:
+    module:
+      - gg_migration
